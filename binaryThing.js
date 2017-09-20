@@ -8,16 +8,16 @@
 
 // // make a list of all permutations with i 1's in them
 const output = [];
-let arr = Array(3).fill('0');
+let arr = Array(3).fill("0");
 
 // ["0", "0", "0"]
 
 for (let i = 0; i < arr.length; i++) {
 	let newArr = arr.map((el, index) => {
-		return index === i ? '1' : el;
+		return index === i ? "1" : el;
 	});
 
-	let string = newArr.join('');
+	let string = newArr.join("");
 	output.push(string);
 	// console.log(string);
 }
@@ -51,8 +51,8 @@ for (let i = 0; i < arr.length; i++) {
 // 		111111
 // 	];
 
-const equal = (n, left = '', right = '', di = 0) => {
-	console.log(n, 'number', left, 'left', right, 'right', di, 'di');
+const equal = (n, left = "", right = "", di = 0) => {
+	console.log(n, "number", left, "left", right, "right", di, "di");
 	if (n == 0) {
 		// If difference between counts of 1s and
 		// 0s is 0 (di is 0)
@@ -68,8 +68,8 @@ const equal = (n, left = '', right = '', di = 0) => {
 		// If difference is 0, we can put remaining
 		// bit in middle.
 		if (di == 0) {
-			console.log(left + '0' + right);
-			console.log(left + '1' + right);
+			console.log(left + "0" + right);
+			console.log(left + "1" + right);
 		}
 		return;
 	}
@@ -80,38 +80,60 @@ const equal = (n, left = '', right = '', di = 0) => {
         must be same) */
 	if (2 * Math.abs(di) <= n) {
 		/*binary number would not start with 0*/
-		if (left != '') {
+		if (left != "") {
 			/* add 0 to end in both left and right
                half. Sum in both half will not
                change*/
-			equal(n - 2, left + '0', right + '0', di);
+			equal(n - 2, left + "0", right + "0", di);
 
 			/* add 0 to end in both left and right
               half* subtract 1 from di as right
               sum is increased by 1*/
-			equal(n - 2, left + '0', right + '1', di - 1);
+			equal(n - 2, left + "0", right + "1", di - 1);
 		}
 
 		/* add 1  in end in left half and 0 to the
           right half. Add 1 to di as left sum is
           increased by 1*/
-		equal(n - 2, left + '1', right + '0', di + 1);
+		equal(n - 2, left + "1", right + "0", di + 1);
 
 		/* add 1 in end to both left and right
           half the sum will not change*/
-		equal(n - 2, left + '1', right + '1', di);
+		equal(n - 2, left + "1", right + "1", di);
 	}
 };
 
 const binaryLoop = n => {
-	// (n >>> 0).toString(2);
-	let arr = new Array(n).fill('1').join('');
+	if (n === 1) {
+		console.log("1");
+		return;
+	}
+
+	let n1 = Math.floor(n / 2);
+	let n2 = Math.ceil(n / 2);
+	let arr = new Array(n).fill("1").join("");
 	let count = parseInt(arr, 2);
-	console.log(count);
-	// for (let i = 0; i < )
+	for (let i = Math.floor(count / 2); i <= count; i++) {
+		let binaryI = (i >>> 0).toString(2);
+		if (binaryI.length !== n) continue;
+		let left = binaryI.slice(0, n1);
+		let right = binaryI.slice(n2, binaryI.length);
+
+		left = left.split("").reduce((acc, el) => {
+			return el === "1" ? acc + 1 : acc;
+		}, 0);
+
+		right = right.split("").reduce((acc, el) => {
+			return el === "1" ? acc + 1 : acc;
+		}, 0);
+
+		if (left === right) {
+			console.log(binaryI);
+		}
+	}
 };
 
-binaryLoop(7);
+binaryLoop(5);
 
 // console.log(equal(6));
 /*
