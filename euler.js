@@ -7,9 +7,13 @@ const isPrime = n => {
 		return false;
 	}
 
+	if (n < 4) {
+		return true;
+	}
+
 	let sqr = Math.sqrt(n);
 
-	for (let i = 2; i < sqr; i++) {
+	for (let i = 2; i <= sqr; i++) {
 		if (n % i === 0) {
 			return false;
 		}
@@ -23,7 +27,6 @@ const primeSums = n => {
 
 	for (let i = 2; i < n; i++) {
 		if (isPrime(i)) {
-			// console.log(i, 'is prime number');
 			sum += i;
 		}
 	}
@@ -32,4 +35,4 @@ const primeSums = n => {
 };
 
 // console.log(primeSums(20));
-console.log(primeSums(10));
+console.log(primeSums(2000000));
